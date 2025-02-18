@@ -1,3 +1,5 @@
+In today’s competitive job market, the recruitment process can be time-consuming and inefficient. HireSmart is an AI-based interview bot designed to streamline hiring by automating data extraction, resume matching, and interview evaluation. Combining RPA, AI models, and NLP, the system offers an efficient and objective solution for recruiters and job seekers.
+
 Phase 1: Storing and Matching Data
 In the first phase, the extracted data from the Excel file is loaded into ChromaDB, a vector database used for managing and searching relevant job data efficiently. 
 A website interface is created where users can log in with valid credentials. 
