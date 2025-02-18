@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HireSmart - Job Matching Results</title>
+    <link rel="stylesheet" href="styles/results.css">
+    <style>/* General Page Styling */
+        /* General Page Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fdfdfd; /* Light Background */
+    color: #0A1D3C; /* Dark Text */
+}
+
+.result-container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #0A1D3C; /* White Background */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    color: #0A1D3C; /* Ensures all text inside is dark */
+    text-align: center;
+}
+
+.result-container h2,
+.result-container p {
+    opacity: 0; /* Start as invisible */
+    animation: fadeIn 1.5s forwards; /* Apply fadeIn animation to both h2 and p */
+}
+
+.result-container h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #FFFFFF; /* Dark Blue */
+}
+
+.result-container p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #FFFFFF; /* Slightly lighter text for paragraphs */
+    animation-delay: 0.5s ; /* Add a slight delay for paragraph fade-in */
+}
+
+.result-container ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.result-container li {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9; /* Light gray for contrast */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    color: #0A1D3C;
+}
+
+.result-container li strong {
+    color: #0A1D3C;
+}
+
+.result-container a button {
+    background-color: #ffe680; /* Yellow */
+    color: #0A1D3C; /* Dark Navy Text */
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.result-container a button:hover {
+    background-color: #ffd700; /* Darker Yellow */
+    transform: scale(1.05);
+}
+
+/* Footer Styling */
+footer {
+    background-color: #0A1D3C;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Fade-In Animation */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+		/* Back button at the top left with adjusted position */
+		.back-button {
+			position: absolute;
+			top: 70px; /* Increased top position to push it below the header */
+			left: 20px;
+			width: 40px;
+			height: 40px;
+			background-color: rgb(8, 5, 34);
+			color: white;
+			font-size: 18px;
+			border: none;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			text-align: center;
+		}
+
+		/* Back button hover effect */
+		.back-button:hover {
+			background-color: #333; /* Darker black on hover */
+		}
+
+        </style>
+        
+    
+</head>
+<body>
+        
+<!-- Back to Home button with a back arrow symbol -->
+<button class="back-button" onclick="goHome()">
+    ←
+</button>
+
+<script>
+    function goHome() {
+        window.location = "{{ url_for('upload_resume') }}";
+    }
+</script>
+
+    <div class="result-container">
+        <h2>Wohooo !! Congratulations 🎉</h2>
+        <p>We have found the best jobs tailored just for you!</p>
+        <p>Your dream career is just a step away. Check out the recommendations below and start your journey today!</p>
+        <h2>Matched Jobs:</h2>
+        {% if matched_jobs %}
+        <ul>
+            {% for job in matched_jobs %}
+                <li>
+                    <strong>Job Title:</strong> {{ job.job_title }}<br>
+                    <strong>Company:</strong> {{ job.job_company }}<br>
+                    <strong>Similarity Score:</strong> {{ job.similarity_score }}<br>
+                    <a href="{{ url_for('start_interview', job_title=job.job_title) }}">
+                        <button>Proceed to Interview</button>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No matching jobs found.</p>
+        {% endif %}
+    </div>
+
+    <footer>
+        <p>&copy; 2024 HireSmart. All rights reserved.</p>
+    </footer>
+</body>
+</html>

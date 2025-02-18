@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluation Results</title>
+
+
+   <!-- <link rel="stylesheet" href="styles/results.css">-->
+    <style>
+        /* General Page Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fdfdfd; /* Light Background */
+            color: #FFFFFF;
+            position: relative;
+        }
+        header {
+            background-color: #0A1D3C; /* Dark Navy Blue */
+            color: #FFFFFF;
+            padding: 50px 20px; /* Increased header height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 3rem; /* Increased font size for header */
+        }
+
+        /* Line below the header */
+        header::after {
+            content: '';
+            width: 80%;
+            height: 2px;
+            background-color: #FFFFFF; /* White line to separate header */
+            position: absolute;
+            bottom: 0;
+        }
+       
+ 
+
+
+
+        /* Footer Styling */
+        footer {
+            background-color: #0A1D3C; /* Dark Navy Blue */
+            color: #FFFFFF;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* Evaluation Container Styling */
+        .evaluation-container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #0A1D3C; /* Dark Background */
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            color: #FFFFFF;
+        }
+
+        .evaluation-container h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #FFFFFF;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
+        }
+
+        /* Table Styling */
+        .evaluation-container table {
+            width: 100%; /* Make the table take full width of the container */
+            max-width: 800px; /* Limit the table width for better appearance */
+            margin: 0 auto; /* Center-align the table */
+            border-collapse: collapse;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
+            animation-delay: 0.5s; /* Add slight delay */
+        }
+
+        .evaluation-container th, .evaluation-container td {
+            padding: 20px 15px;  /* Increased padding */
+            text-align: left;
+            border: 1px solid #ddd;
+            color: #FFFFFF;
+            line-height: 1.6;  /* Increased line-height for more spacing */
+        }
+
+        .evaluation-container th {
+            background-color: #0A1D3C;
+            font-size: 1.2rem;
+        }
+
+        .evaluation-container td {
+            background-color: #2A3A56;
+            font-size: 1rem;
+        }
+
+        .evaluation-container tr:hover {
+            background-color: #3a4a66;
+        }
+
+        .evaluation-container td .similarity-score {
+            font-weight: bold;
+            color: #FFE680;
+        }
+
+        /* Fade-In Animation */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Confetti Effect Styling */
+        .confetti {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            animation: confetti-animation 5s ease-in-out infinite;
+            pointer-events: none;
+            top: -10px;
+        }
+
+        .confetti:nth-child(1) { left: 5%; animation-duration: 4s; background-color: #FF5733; }
+        .confetti:nth-child(2) { left: 10%; animation-duration: 6s; background-color: #FF33A1; }
+        .confetti:nth-child(3) { left: 15%; animation-duration: 5s; background-color: #FF9A33; }
+        .confetti:nth-child(4) { left: 20%; animation-duration: 7s; background-color: #FF5733; }
+        .confetti:nth-child(5) { left: 25%; animation-duration: 6s; background-color: #FFD733; }
+        .confetti:nth-child(6) { left: 40%; animation-duration: 5s; background-color: #33FF57; }
+        .confetti:nth-child(7) { left: 45%; animation-duration: 6s; background-color: #33C1FF; }
+        .confetti:nth-child(8) { left: 50%; animation-duration: 7s; background-color: #33FFBB; }
+        .confetti:nth-child(9) { left: 55%; animation-duration: 6s; background-color: #FF3355; }
+        .confetti:nth-child(10) { left: 60%; animation-duration: 5s; background-color: #5733FF; }
+        .confetti:nth-child(11) { left: 75%; animation-duration: 6s; background-color: #FF5733; }
+        .confetti:nth-child(12) { left: 80%; animation-duration: 7s; background-color: #9A33FF; }
+        .confetti:nth-child(13) { left: 85%; animation-duration: 5s; background-color: #FFD733; }
+        .confetti:nth-child(14) { left: 90%; animation-duration: 6s; background-color: #33FFBB; }
+        .confetti:nth-child(15) { left: 95%; animation-duration: 8s; background-color: #FF33A1; }
+
+        /* Image Styling for Victory Sign */
+        .victory-image {
+            position: absolute;
+            bottom: 30px; /* Position it at the bottom of the screen */
+            right: 10%;
+            width: 200px;
+            height: auto;
+        }
+        
+		/* Back button at the top left with adjusted position */
+		.back-button {
+			position: absolute;
+			top: 70px; /* Increased top position to push it below the header */
+			left: 20px;
+			width: 40px;
+			height: 40px;
+			background-color: rgb(8, 5, 34);
+			color: white;
+			font-size: 18px;
+			border: none;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			text-align: center;
+		}
+
+		/* Back button hover effect */
+		.back-button:hover {
+			background-color: #333; /* Darker black on hover */
+		}
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>HireSmart</h1>
+    </header>
+    
+<!-- Back to Home button with a back arrow symbol -->
+<button class="back-button" onclick="goHome()">
+    ←
+</button>
+
+<script>
+    function goHome() {
+        window.location = "{{ url_for('home') }}";
+    }
+</script>
+
+    <!-- Confetti Elements -->
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+
+    <!-- Victory Image 
+    <img src="static/images/hello.jpg" alt="Victory Image" class="victory-image" />
+-->
+    <!-- Evaluation Results Section -->
+    <div class="evaluation-container">
+        <h1>Evaluation Results</h1>
+     
+        <table>
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Your Answer</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for evaluation in evaluation_results %}
+                <tr>
+                    <td>{{ evaluation.question }}</td>
+                    <td>{{ evaluation.user_answer }}</td>
+                    <td>{{ evaluation.result }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+ 
+    <footer>
+        <p>&copy; 2024 HireSmart. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

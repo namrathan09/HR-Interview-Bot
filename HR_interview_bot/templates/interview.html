@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview for {{ job_title }}</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fdfdfd;
+            color: #FFFFFF;
+        }
+
+        header {
+            background-color: #0A1D3C; /* Dark Navy Blue */
+            color: #FFFFFF;
+            padding: 50px 20px; /* Increased header height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 3rem; /* Increased font size for header */
+        }
+
+        /* Line below the header */
+        header::after {
+            content: '';
+            width: 80%;
+            height: 2px;
+            background-color: #FFFFFF; /* White line to separate header */
+            position: absolute;
+            bottom: 0;
+        }
+
+        footer {
+            background-color: #0A1D3C; /* Dark Navy Blue */
+            color: #FFFFFF;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #0A1D3C;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 30px; /* Increased bottom margin */
+            opacity: 0;
+            animation: fadeIn 2s forwards;
+        }
+
+        /* Animation for fading in the job title */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hover effect for job title */
+        h1:hover {
+            transform: scale(1.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .instructions {
+            margin-bottom: 40px; /* Increased bottom margin */
+            padding: 20px;
+            background: #ffe680;
+            border-radius: 5px;
+        }
+
+        .instructions h2 {
+            margin-bottom: 10px;
+            color: #0A1D3C;
+        }
+
+        .instructions ul {
+            padding-left: 20px;
+        }
+
+        .instructions ul li {
+            margin: 10px 0;
+            color: #0A1D3C; /* Changed the color of list items */
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form div {
+            margin-bottom: 40px; /* Larger spacing between textboxes */
+        }
+
+        label {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input[type="text"] {
+            width: 97%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            padding: 12px;
+            font-size: 1.2rem;
+            background: #ffe680;
+            border: none;
+            color: #0A1D3C;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background: #ffe680;
+        }
+        
+		/* Back button at the top left with adjusted position */
+		.back-button {
+			position: absolute;
+			top: 70px; /* Increased top position to push it below the header */
+			left: 20px;
+			width: 40px;
+			height: 40px;
+			background-color: rgb(8, 5, 34);
+			color: white;
+			font-size: 18px;
+			border: none;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			text-align: center;
+		}
+
+		/* Back button hover effect */
+		.back-button:hover {
+			background-color: #333; /* Darker black on hover */
+		}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>HireSmart</h1>
+    </header>
+    
+<!-- Back to Home button with a back arrow symbol -->
+<button class="back-button" onclick="goHome()">
+    ←
+</button>
+
+<script>
+    function goHome() {
+        window.location = "{{ url_for('results') }}";
+    }
+</script>
+
+<script>
+    function goHome() {
+        window.location = "{{ url_for('home') }}";
+    }
+</script>
+    <div class="container">
+        <h1>Interview for {{ job_title }}</h1>
+
+        <div class="instructions">
+            <h2>Please read the instructions before answering:</h2>
+            <ul>
+                <li>Ensure your answers are clear, short, and concise, avoiding unnecessary details.</li>
+                <li>Avoid using abbreviations; instead, provide the full expanded form to demonstrate a clear understanding of the concept.</li>
+                <li>Ensure that your language is technically accurate and reflects a strong understanding of the subject matter.</li>
+                <li>Be grammatically correct to convey professionalism and clarity in your response.</li>
+            </ul>
+        </div>
+
+        <form action="{{ url_for('evaluate_answers') }}" method="POST">
+            {% for question in questions %}
+            <div>
+                <label for="question_{{ loop.index }}">{{ question }}</label>
+                <input 
+                    type="text" 
+                    id="question_{{ loop.index }}" 
+                    name="{{ question }}" 
+                    placeholder="Your answer here" 
+                    required>
+            </div>
+            {% endfor %}
+            <button type="submit">Submit Answers</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 HireSmart. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
